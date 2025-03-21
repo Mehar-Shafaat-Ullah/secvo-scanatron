@@ -9,13 +9,77 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      scans: {
+        Row: {
+          id: string
+          risk_level: string | null
+          scan_date: string | null
+          status: string | null
+          url: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          risk_level?: string | null
+          scan_date?: string | null
+          status?: string | null
+          url: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          risk_level?: string | null
+          scan_date?: string | null
+          status?: string | null
+          url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vulnerabilities: {
+        Row: {
+          description: string | null
+          id: string
+          name: string
+          recommendation: string | null
+          scan_id: string
+          severity: string
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          name: string
+          recommendation?: string | null
+          scan_id: string
+          severity: string
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          name?: string
+          recommendation?: string | null
+          scan_id?: string
+          severity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vulnerabilities_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "scans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

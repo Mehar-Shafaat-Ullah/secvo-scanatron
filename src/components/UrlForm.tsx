@@ -3,13 +3,18 @@ import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 
 const UrlForm: React.FC = () => {
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!url) {
@@ -20,16 +25,51 @@ const UrlForm: React.FC = () => {
       });
       return;
     }
-    
-    // Simulate scanning process
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    // Check if user is authenticated
+    if (!user) {
       toast({
-        title: "Scan initiated",
-        description: "We're scanning your website for vulnerabilities",
+        title: "Authentication Required",
+        description: "Please sign in to perform a security scan",
+        variant: "destructive"
       });
-    }, 1500);
+      navigate('/signin');
+      return;
+    }
+    
+    try {
+      setIsLoading(true);
+      
+      // Create a new scan in the database
+      const { data, error } = await supabase
+        .from('scans')
+        .insert({
+          url: url,
+          user_id: user.id,
+          status: 'processing',
+          risk_level: 'pending'
+        })
+        .select();
+      
+      if (error) throw error;
+      
+      // Redirect to the scan results page
+      if (data && data.length > 0) {
+        toast({
+          title: "Scan initiated",
+          description: "Your website is being scanned for vulnerabilities",
+        });
+        navigate(`/scan/${data[0].id}`);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Scan Failed",
+        description: error.message || "There was an error initiating the scan",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
