@@ -62,7 +62,7 @@ const UrlForm: React.FC = () => {
             "text-white font-medium text-sm",
             "focus:outline-none",
             "transition-all duration-300",
-            "hover:shadow-glow",
+            "shadow-[0_0_15px_rgba(0,87,255,0.3)] hover:shadow-[0_0_25px_rgba(0,87,255,0.5)]",
             isLoading && "opacity-70"
           )}
         >

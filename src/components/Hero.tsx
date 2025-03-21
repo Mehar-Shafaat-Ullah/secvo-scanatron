@@ -3,12 +3,14 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import UrlForm from './UrlForm';
 import AnimatedGradient from './ui-components/AnimatedGradient';
+import CyberSecurityBackground from './ui-components/CyberSecurityBackground';
 import { Shield, Lock, Zap } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
     <section className="relative pt-28 pb-20 md:pt-44 md:pb-32 flex items-center min-h-screen overflow-hidden">
       <AnimatedGradient />
+      <CyberSecurityBackground />
       
       {/* Decorative elements */}
       <div className="absolute top-1/2 left-10 w-32 h-32 bg-secvo-blue/10 rounded-full blur-3xl" />
@@ -37,10 +39,10 @@ const Hero: React.FC = () => {
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className="glass rounded-xl p-6 opacity-0 animate-fade-in"
+                className="glass rounded-xl p-6 opacity-0 animate-fade-in hover:border-secvo-blue/30 hover:shadow-[0_0_15px_rgba(0,87,255,0.2)] transition-all duration-300"
                 style={{ animationDelay: `${600 + index * 100}ms`, animationFillMode: 'forwards' }}
               >
-                <div className="bg-gradient-to-br from-secvo-blue to-secvo-accent w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <div className="bg-gradient-to-br from-secvo-blue to-secvo-accent w-12 h-12 rounded-lg flex items-center justify-center mb-4 shadow-[0_0_10px_rgba(0,87,255,0.5)]">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>

@@ -30,11 +30,11 @@ const HowItWorks: React.FC = () => {
                 className={cn(
                   "glass-dark rounded-xl p-8 h-full transition-all duration-300",
                   "border border-gray-800 hover:border-secvo-blue/40",
-                  "group hover:shadow-glow opacity-0 animate-scale-fade-in"
+                  "group hover:shadow-[0_0_20px_rgba(0,87,255,0.3)] opacity-0 animate-scale-fade-in"
                 )}
                 style={{ animationDelay: `${index * 200}ms`, animationFillMode: 'forwards' }}
               >
-                <div className="w-16 h-16 flex items-center justify-center rounded-full mb-6 bg-gradient-to-br from-secvo-blue to-secvo-accent">
+                <div className="w-16 h-16 flex items-center justify-center rounded-full mb-6 bg-gradient-to-br from-secvo-blue to-secvo-accent shadow-[0_0_15px_rgba(0,87,255,0.4)]">
                   {step.icon}
                 </div>
                 
@@ -61,7 +61,8 @@ const HowItWorks: React.FC = () => {
               "inline-flex items-center justify-center px-8 py-3",
               "font-medium rounded-lg text-white",
               "bg-gradient-to-r from-secvo-blue to-secvo-accent",
-              "hover:shadow-glow transition-all duration-300",
+              "shadow-[0_0_20px_rgba(0,87,255,0.4)] hover:shadow-[0_0_30px_rgba(0,87,255,0.6)]",
+              "transition-all duration-300",
               "after:content-[''] after:absolute after:inset-0",
               "after:rounded-lg after:opacity-0 after:transition-opacity",
               "after:bg-gradient-to-r after:from-secvo-accent after:to-secvo-blue",
